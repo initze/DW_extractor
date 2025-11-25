@@ -328,6 +328,6 @@ def create_plot_per_site(df: pd.DataFrame, site: str):
 
     return fig
 
-    def chunk_list(seq, size=4):
-        """Split `seq` into sublists with up to `size` items each."""
-        return [seq[i : i + size] for i in range(0, len(seq), size)]
+def chunk_list(seq, size=4):
+    """Split `seq` into sublists with up to `size` items each."""
+    return [seq[i : i + size] for i in range(0, len(seq), size)]

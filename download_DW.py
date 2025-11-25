@@ -36,10 +36,16 @@ def parse_args():
         help="Earth Engine project ID (required)",
     )
     parser.add_argument(
-        "--stepsize",
+        "--step-size",
         type=int,
         default=7,
         help="Step size in days (default: 7)",
+    )
+    parser.add_argument(
+        "--window-size",
+        type=int,
+        default=7,
+        help="Window size in days (default: 7)",
     )
     parser.add_argument(
         "--output-dir",
@@ -54,13 +60,13 @@ def parse_args():
         help="Name attribute column (default: Name)",
     )
     parser.add_argument(
-        "--start-year",
+        "--year-start",
         type=int,
         default=2017,
         help="Start year (default: 2017)",
     )
     parser.add_argument(
-        "--end-year",
+        "--year-end",
         type=int,
         default=2025,
         help="End year (default: 2025)",
@@ -86,11 +92,12 @@ def main():
 
     # setup input args
     INPUT_VECTOR = args.input_vector
-    STEPSIZE = args.stepsize
+    STEPSIZE = args.step_size
+    WINDOWSIZE = args.window_size
     OUTPUT_DIR = args.output_dir
     NAME_ATTRIBUTE = args.name_attribute
-    START_YEAR = args.start_year
-    END_YEAR = args.end_year
+    START_YEAR = args.year_start
+    END_YEAR = args.year_end
     SEASON_START = args.season_start
     SEASON_END = args.season_end
     EE_PROJECT = args.ee_project
@@ -145,7 +152,7 @@ def main():
                 imlist = []
                 for date in tqdm(dates, desc="Processing dates"):
                     try:
-                        window = make_date_window(date, 7, mode="each")
+                        window = make_date_window(date, WINDOWSIZE, mode="each")
                         start_date = window["start_date"]
                         end_date = window["end_date"]
                         # calculate class mode values
@@ -183,8 +190,8 @@ def main():
             df_final = calculate_data_area(ds).to_dataframe().reset_index()
 
             # save output
-            df_final.to_csv(OUTPUT_DIR / f"output_{year}_{STEPSIZE}dayAgg.csv")
-            df_final.to_parquet(OUTPUT_DIR / f"output_{year}_{STEPSIZE}dayAgg.parquet")
+            df_final.to_csv(OUTPUT_DIR / f"output_{year}_{WINDOWSIZE}dayAgg.csv")
+            df_final.to_parquet(OUTPUT_DIR / f"output_{year}_{WINDOWSIZE}dayAgg.parquet")
 
         except Exception as e:
             print(e)
