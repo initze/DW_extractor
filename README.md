@@ -1,0 +1,1 @@
+# Tools to extract Dynamic World data for dynamic temporal windows
