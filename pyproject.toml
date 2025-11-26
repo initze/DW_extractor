@@ -1,8 +1,11 @@
 [project]
-name = "mhock-inundation-northslope"
+name = "dw-extractor"
 version = "0.1.0"
-description = "Add your description here"
+description = "Tools to extract Dynamic World data for dynamic temporal windows"
 readme = "README.md"
+authors = [
+    { name = "Ingmar Nitze", email = "ingmar.nitze@awi.de" }
+]
 requires-python = ">=3.12"
 dependencies = [
     "eemont>=2025.7.1",
