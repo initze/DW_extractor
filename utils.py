@@ -314,12 +314,12 @@ def calculate_data_area(ds: xr.Dataset) -> xr.Dataset:
     return ds
 
 
-def create_plot_per_site(df: pd.DataFrame, site: str):
+def create_plot_per_site(df: pd.DataFrame, site: str, name_field: str = "Name"):
     fig, ax = plt.subplots(figsize=(10, 4))
-    df.query(f'Name == "{site}" and area_nodata == 0').plot(
+    df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
         x="date", y="flooded_vegetation", ax=ax, c="g", marker=".", title=site
     )
-    df.query(f'Name == "{site}" and area_nodata == 0').plot(
+    df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
         x="date", y="water", ax=ax, c="b", marker="."
     )
     ax.tick_params(axis="x", rotation=45)
