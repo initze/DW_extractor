@@ -314,20 +314,51 @@ def calculate_data_area(ds: xr.Dataset) -> xr.Dataset:
     return ds
 
 
-def create_plot_per_site(df: pd.DataFrame, site: str, name_field: str = "Name"):
+def create_plot_per_site(
+    df: pd.DataFrame,
+    site: str,
+    name_field: str = "Name",
+    ylabel: str = "area [ha]",
+    plot_flooded_vegetation: bool = True,
+    plot_ice: bool = False,
+):
     fig, ax = plt.subplots(figsize=(10, 4))
+    if plot_flooded_vegetation:
+        df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
+            x="date", y="flooded_vegetation", ax=ax, c="#31a354", marker=".", title=site
+        )
+    if plot_ice:
+        df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
+            x="date",
+            y="snow_and_ice",
+            ax=ax,
+            c="#666666",
+            marker=".",
+            alpha=0.7,
+            zorder=0,
+        )
     df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
-        x="date", y="flooded_vegetation", ax=ax, c="g", marker=".", title=site
-    )
-    df.query(f'{name_field} == "{site}" and area_nodata == 0').plot(
-        x="date", y="water", ax=ax, c="b", marker="."
+        x="date", y="water", ax=ax, c="#2c7fb8", marker="."
     )
     ax.tick_params(axis="x", rotation=45)
     ax.grid()
-    ax.set_ylabel("area [ha]")
+    ax.set_ylabel(ylabel)
 
     return fig
+
 
 def chunk_list(seq, size=4):
     """Split `seq` into sublists with up to `size` items each."""
     return [seq[i : i + size] for i in range(0, len(seq), size)]
+
+
+def normalize_values(df: pd.DataFrame, name_field: str) -> pd.DataFrame:
+    non_numeric_cols = [name_field, "date", "reducer"]
+    if "year" in df.columns:
+        non_numeric_cols.append("year")
+    if "month" in df.columns:
+        non_numeric_cols.append("month")
+    df_normed = df.drop(columns=non_numeric_cols).divide(
+        df[["area_data", "area_nodata"]].sum(axis=1), axis=0
+    )
+    return df[non_numeric_cols].join(df_normed)
