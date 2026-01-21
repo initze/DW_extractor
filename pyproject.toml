@@ -1,6 +1,6 @@
 [project]
 name = "dw-extractor"
-version = "0.1.0"
+version = "0.2.0"
 description = "Tools to extract Dynamic World data for dynamic temporal windows"
 readme = "README.md"
 authors = [
@@ -15,6 +15,7 @@ dependencies = [
     "ipykernel>=7.1.0",
     "jupyterlab>=4.5.0",
     "matplotlib>=3.10.7",
+    "osmnx>=2.0.7",
     "pyarrow>=22.0.0",
     "seaborn>=0.13.2",
     "tqdm>=4.67.1",
