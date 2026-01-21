@@ -24,5 +24,5 @@
   * Year 2024, from 01 August to 15 September
 
 ```bash
-uv run download_DW.py --input-vector YOUR-FILE.gpkg --ee-project YOUR-EEPROJECT --step-size 7 --window-size 7 --output-dir data/output_v3_3daystep/annual --name-attribute Name --year-start 2024 --year-end 2024 --season-start 08-01 --season-end 09-15
+uv run download_dynamic_world --input-vector YOUR-FILE.gpkg --ee-project YOUR-EEPROJECT --step-size 7 --window-size 7 --output-dir data/output_v3_3daystep/annual --name-attribute Name --year-start 2024 --year-end 2024 --season-start 08-01 --season-end 09-15
 ```

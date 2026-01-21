@@ -24,3 +24,23 @@ dependencies = [
 
 [tool.ruff.lint]
 fixable = ["F401"]
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.hatch.build.targets.wheel]
+packages = ["dw_extractor"]
+[tool.setuptools]
+packages = ["dw_extractor"]
+
+[tool.uv-dynamic-versioning]
+
+[project.scripts]
+download_dynamic_world = "dw_extractor.scripts.download_DW:main"
