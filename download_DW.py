@@ -8,7 +8,7 @@ import geopandas as gpd
 import pandas as pd
 from tqdm import tqdm
 
-from utils import (
+from dw_extractor.utils import (
     calc_dw_aggregate_v2,
     calculate_data_area,
     chunk_list,
